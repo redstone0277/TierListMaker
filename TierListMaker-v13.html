@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TierListMaker</title>
+<style>
+:root{--bg:#201d27;--panel:#292531;--panel2:#34303e;--text:#f4f1fa;--muted:#aaa4b6;--line:#35313f;--accent:#8b5cf6;--blue:#5278c9;--danger:#e05260;--shadow:0 12px 32px #0005;--radius:12px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:8px;padding:10px 14px;transition:.16s ease}button:hover{border-color:var(--accent);transform:translateY(-1px)}button.primary{background:var(--accent);border-color:var(--accent);color:white;font-weight:650}button.danger{color:#ff8991;border-color:#71313a}button.icon{width:38px;height:38px;padding:0;display:inline-grid;place-items:center;font-size:18px}button:disabled{opacity:.4;cursor:not-allowed;transform:none}input,select{background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;outline:none}input:focus,select:focus{border-color:var(--accent)}label{display:block;color:var(--muted);font-size:13px;margin:0 0 6px}.app{display:flex;min-height:100vh}.sidebar{width:66px;flex:none;border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:12px;background:#15131b}.brand{font-weight:850;color:var(--accent);font-size:19px;margin:5px 0 16px}.nav{display:flex;flex-direction:column;gap:9px}.nav button{width:42px;height:42px;padding:0;font-size:18px;border:0;background:transparent;color:var(--muted)}.nav button.active,.nav button:hover{background:#35294d;color:#c4a9ff}.back{margin-bottom:4px}.main{width:min(1280px,100%);margin:0 auto;padding:30px 36px 48px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.title{font-size:30px;font-weight:800;letter-spacing:-.04em;margin:5px 0}.muted{color:var(--muted)}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(240px,1fr));gap:18px;align-items:stretch}.choice-grid .action-card{min-height:170px;min-width:0}.action-card{min-height:150px;text-align:left;padding:22px;background:linear-gradient(145deg,var(--panel),#211b2c);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}.action-card .big{font-size:27px;color:#b99aff}.action-card strong{font-size:16px}.section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}.section h2{font-size:16px;margin:0 0 14px}.recent-item,.list-item{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line)}.recent-item:last-child,.list-item:last-child{border:0}.item-main{flex:1;min-width:0;cursor:pointer}.item-main strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.status{font-size:11px;padding:4px 8px;border-radius:99px;background:#302941;color:#c7afff}.status.done{background:#1e3a30;color:#8ee0b3}.empty{padding:30px;text-align:center;color:var(--muted)}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px}.row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.field{flex:1;min-width:170px}.steps{display:flex;gap:8px;margin-bottom:20px}.step{padding:8px 12px;border-radius:99px;background:var(--panel2);color:var(--muted);font-size:13px}.step.active{background:#38295a;color:#d4c2ff}.tier-row{display:flex;min-height:112px;border:1px solid #ffffff20;margin:0;position:relative}.tier-label{width:116px;flex:none;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:850;font-size:22px;color:#fff;padding:8px;overflow-wrap:anywhere}.tier-content{flex:1;min-width:0;padding:5px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:0;max-height:250px;overflow-y:auto;background:#17151d}.tile{width:var(--tile-size,110px);height:var(--tile-size,110px);flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:3px;cursor:grab;border:1px solid transparent;transition:background .12s,border .12s;overflow:hidden}.tile img{display:block;width:100%;height:calc(100% - 19px);min-height:0;object-fit:contain;pointer-events:none}.tile-name{display:block;width:100%;height:18px;line-height:18px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;padding:0 3px;background:#100e16;color:#fff;font-size:10px;font-weight:650;text-shadow:0 1px 2px #000}.tile:hover{border-color:#a78bfa;background:#ffffff09}.tile.dragging{opacity:.35}.tier-content.over,.pool.over{outline:2px dashed var(--accent);outline-offset:-3px;background:#302541}.pool{min-height:140px;border:1px dashed var(--line);border-radius:10px;padding:10px;display:flex;gap:5px;align-content:flex-start;flex-wrap:wrap;background:#17151d}.current-dock{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,var(--bg) 18%);padding:22px 0 8px;margin-top:12px;z-index:4}.dock-inner{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:20px}.current-preview{width:110px;height:110px;display:grid;place-items:center;background:#17151d;border-radius:8px;flex:none}.current-preview img{display:block;width:100%;height:100%;object-fit:contain}.drop-hint{border:1px dashed var(--accent);border-radius:8px;padding:12px;color:#cbb7ff;flex:1;text-align:center}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.tier-config{display:grid;grid-template-columns:minmax(240px,1fr) 48px 38px 38px;gap:10px;align-items:center;margin:12px 0;position:relative}.tier-config input[data-tiername]{width:100%;min-width:0;height:56px;padding:13px 15px;font-size:16px}.tier-config .color-trigger{width:48px;height:48px;padding:4px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);display:grid;place-items:center}.tier-config .color-preview{width:100%;height:100%;border-radius:6px;border:1px solid #ffffff40}.tier-config .color-trigger:hover{border-color:var(--accent)}.tier-config .note{text-align:center}.color-palette{position:absolute;z-index:12;top:0;right:144px;left:auto;width:min(270px,calc(100vw - 64px));padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow)}.color-palette[hidden]{display:none}.color-square{height:150px;width:100%;position:relative;border-radius:6px;overflow:hidden;touch-action:none;cursor:crosshair;background:linear-gradient(to top,#000,transparent),linear-gradient(to right,#fff,hsl(0 100% 50%))}.color-cursor{position:absolute;width:12px;height:12px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #111;transform:translate(-50%,-50%);pointer-events:none}.hue-control{appearance:none;-webkit-appearance:none;width:100%;height:14px;margin:12px 0 10px;border:0;border-radius:99px;background:linear-gradient(to right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00);cursor:pointer}.hue-control::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:14px;height:20px;border:2px solid #fff;border-radius:5px;background:#34303e;box-shadow:0 0 0 1px #111}.hue-control::-moz-range-thumb{width:10px;height:16px;border:2px solid #fff;border-radius:5px;background:#34303e;box-shadow:0 0 0 1px #111}.color-custom{display:flex;align-items:center;gap:8px}.color-custom label{margin:0;white-space:nowrap}.color-custom input{width:100%;height:38px;padding:7px 10px;text-transform:uppercase;font-size:14px}.color-palette .color-help{margin-top:7px;font-size:11px;color:var(--muted)}.thumb{width:54px;height:54px;object-fit:contain;border-radius:7px;background:#111}.modal-bg{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:20px;z-index:20}.modal{width:min(520px,100%);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.hidden{display:none!important}.name-toggle{display:flex;align-items:center;gap:9px;cursor:pointer}.name-toggle input[type=checkbox]{width:21px;height:21px;flex:none;margin:0;accent-color:var(--accent);cursor:pointer}.note{font-size:12px;color:var(--muted);line-height:1.5}.file-list{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.file-chip{background:var(--panel2);padding:7px 10px;border-radius:7px;font-size:12px}.toast{position:fixed;right:22px;bottom:22px;background:#302846;border:1px solid #7154a8;padding:12px 16px;border-radius:9px;z-index:40;box-shadow:var(--shadow)}body[data-theme="1"]{--bg:#201d27;--panel:#292531;--panel2:#34303e;--text:#f4f1fa;--muted:#b8b1c2;--line:#484252}body[data-theme="2"]{--bg:#393640;--panel:#45414d;--panel2:#514d59;--text:#fff;--muted:#d0cad6;--line:#625d69}body[data-theme="3"]{--bg:#d9d7df;--panel:#eeedf2;--panel2:#fff;--text:#26232d;--muted:#6e6976;--line:#cbc7d2}body[data-theme="4"]{--bg:#f5f4f8;--panel:#fff;--panel2:#f0eef5;--text:#211d29;--muted:#716b7a;--line:#dedbe5}.light .sidebar{background:#fff}
+@media(max-width:850px){.main{padding:22px 16px}.choice-grid{grid-template-columns:1fr}.sidebar{width:56px}.settings-grid{grid-template-columns:1fr}.tier-label{width:82px;font-size:18px}.tile{width:90px;height:90px}.dock-inner{gap:10px}.current-preview{width:90px;height:90px}}
+
+
+/* Liste sauvegardée : cartes compactes et miniatures contenues */
+.list-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.list-action{height:58px;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;background:linear-gradient(145deg,var(--panel2),#282331);border:1px solid #514465}
+.recent-item{display:flex;align-items:center;gap:16px;padding:12px;margin:0 0 12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;min-width:0}
+.recent-item:last-child{margin-bottom:0}
+.list-cover{width:82px;height:104px;flex:none;display:grid;place-items:center;overflow:hidden;border-radius:7px;background:#17151d;border:1px solid var(--line);padding:4px}
+.list-cover img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}
+.item-main{min-width:0;flex:1;padding:5px 0}
+.item-main strong{font-size:17px;margin-bottom:9px}
+.item-actions{display:flex;gap:8px;flex:none}
+.item-actions .icon{width:42px;height:42px}
+button.delete-list{color:#ff8991;border-color:#71313a;background:#302027}
+button.delete-list:hover{background:#48252d;border-color:#e05260}
+.confirm-modal{width:min(440px,100%);text-align:center}
+.confirm-symbol{font-size:34px;color:#ff6674;margin-bottom:8px}
+.confirm-modal p{color:var(--muted);line-height:1.55}
+.confirm-modal .modal-actions{justify-content:center}
+@media(max-width:650px){.recent-item{gap:9px;padding:9px}.list-cover{width:60px;height:78px}.item-actions{gap:5px}.item-actions .icon{width:36px;height:36px}.list-action{height:54px;font-size:13px}}
+</style></head>
+<body data-theme="1">
+<div class="app"><aside class="sidebar">
+<button class="icon back" id="backBtn" title="Retour" aria-label="Retour">←</button>
+<nav class="nav"><button id="navLists" class="active" title="Mes Tier Lists" aria-label="Mes Tier Lists">▤</button><button id="navSettings" title="Paramètres" aria-label="Paramètres">⚙</button></nav>
+</aside><main class="main"><div id="view"></div></main></div><div id="modalRoot"></div><div id="toastRoot"></div>
+<script>
+const $=s=>document.querySelector(s), uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+const DB='tlm-db', STORE='lists', META='TIERLISTMAKER_V1';
+let db, page='lists', historyStack=[], current=null, config=null, pendingFiles=[], showNames=false, settings={theme:1,size:110,language:'fr'};
+const defaultTiers=[['S','#702b36'],['A','#9b6334'],['B','#b59a3f'],['C','#357a57'],['D','#346b9c'],['F','#66518d']];
+function openDB(){return new Promise((res,rej)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id'});r.onsuccess=()=>{db=r.result;res()};r.onerror=()=>rej(r.error)})}
+function put(o){return new Promise((res,rej)=>{let t=db.transaction(STORE,'readwrite');t.objectStore(STORE).put(o);t.oncomplete=()=>res();t.onerror=()=>rej(t.error)})}
+function getAll(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result.sort((a,b)=>b.updated-a.updated));r.onerror=()=>rej(r.error)})}
+function getOne(id){return new Promise(res=>{let r=db.transaction(STORE).objectStore(STORE).get(id);r.onsuccess=()=>res(r.result)})}
+function del(id){return new Promise(res=>{let t=db.transaction(STORE,'readwrite');t.objectStore(STORE).delete(id);t.oncomplete=res})}
+function save(){if(!current)return;current.updated=Date.now();current.status=current.items.every(x=>x.tier!==null)?'done':'progress';put(current).then(()=>{})}
+function toast(s){$('#toastRoot').innerHTML=`<div class="toast">${esc(s)}</div>`;setTimeout(()=>$('#toastRoot').innerHTML='',2600)}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function go(p){if(page!==p)historyStack.push(page);page=p;render()}
+function back(){if(page==='rank'&&current){save();page='detail'}else if(page==='rank-view')page='detail';else page=historyStack.pop()||'lists';render()}
+$('#backBtn').onclick=back;document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#modalRoot').innerHTML)closeModal();else back()}});
+function setNav(){['Lists','Settings'].forEach(x=>$('#nav'+x).classList.toggle('active',page==='lists'&&x==='Lists'||page==='settings'&&x==='Settings'))}
+function render(){setNav();if(page==='lists')lists();if(page==='settings')settingsPage();if(page==='choose')choose();if(page==='config')configPage();if(page==='images')imagesPage();if(page==='rank')rankPage();if(page==='detail')detailPage();if(page==='watch')watchPage();if(page==='redo')redoPage();if(page==='edit')editPage();if(page==='import')importPage()}
+$('#navLists').title=tr('Mes Tier Lists','My Tier Lists');$('#navLists').ariaLabel=$('#navLists').title;
+$('#navSettings').title=tr('Paramètres','Settings');$('#navSettings').ariaLabel=$('#navSettings').title;
+$('#navLists').onclick=()=>go('lists');$('#navSettings').onclick=()=>go('settings');
+function head(title,sub=''){return `<div class="top"><div><div class="eyebrow">TierListMaker</div><div class="title">${title}</div>${sub?`<div class="muted">${sub}</div>`:''}</div></div>`}
+function itemRow(x){
+ const cover=x.items?.find(it=>it.data)?.data;
+ return `<div class="recent-item">
+  <div class="list-cover">${cover?`<img src="${cover}" alt="">`:'<span class="muted">▧</span>'}</div>
+  <div class="item-main" data-open="${x.id}" role="button" tabindex="0">
+   <strong>${esc(x.title)}</strong>
+   <span class="status ${x.status==='done'?'done':''}">${x.status==='done'?tr('Terminée','Completed'):tr('En cours','In progress')}</span>
+  </div>
+  <div class="item-actions">
+   <button class="icon" title="${tr('Télécharger PNG','Download PNG')}" aria-label="${tr('Télécharger PNG','Download PNG')}" data-export="${x.id}">↓</button>
+   <button class="icon delete-list" title="${tr('Supprimer','Delete')}" aria-label="${tr('Supprimer','Delete')}" data-delete="${x.id}">⌫</button>
+  </div>
+ </div>`;
+}
+async function lists(){
+ let all=await getAll();if(page!=='lists')return;
+ $('#view').innerHTML=head(tr('Mes Tier Lists','My Tier Lists'),`${all.length} ${tr('classement(s) sauvegardé(s)','saved tier list(s)')}`)
+ +`<div class="list-actions">
+  <button class="list-action" id="new"><span class="big">＋</span>${tr('Créer une Tier List','Create a Tier List')}</button>
+  <button class="list-action" id="import"><span class="big">⇧</span>${tr('Importer une Tier List','Import a Tier List')}</button>
+ </div>
+ <section class="section">${all.length?all.map(itemRow).join(''):`<div class="empty">${tr("Tu n'as pas encore créé de Tier List.","You haven't created a Tier List yet.")}</div>`}</section>`;
+ $('#new').onclick=()=>{config={title:tr('Ma Tier List','My Tier List'),tiers:defaultTiers.map(x=>[...x]),showNames:false};pendingFiles=[];go('config')};$('#import').onclick=()=>go('import');wireRows();
+}
+function wireRows(){
+ $$('[data-open]').forEach(el=>{
+  const open=async()=>{current=await getOne(el.dataset.open);go('detail')};
+  el.onclick=open;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+ });
+ $$('[data-export]').forEach(b=>b.onclick=async e=>{e.stopPropagation();let x=await getOne(b.dataset.export);if(x)exportPNG(x)});
+ $$('[data-delete]').forEach(b=>b.onclick=e=>{e.stopPropagation();confirmDelete(b.dataset.delete)});
+}
+function confirmDelete(id){
+ getOne(id).then(item=>{
+  if(!item)return;
+  $('#modalRoot').innerHTML=`<div class="modal-bg" id="deleteOverlay"><section class="modal confirm-modal">
+   <div class="confirm-symbol">♲</div>
+   <h2>${tr('Supprimer cette Tier List ?','Delete this Tier List?')}</h2>
+   <p>${tr('Êtes-vous sûr de vouloir supprimer','Are you sure you want to delete')} « <strong>${esc(item.title)}</strong> » ?<br>${tr('Cette action est irréversible.','This action cannot be undone.')}</p>
+   <div class="modal-actions"><button id="cancelDelete">${tr('Annuler','Cancel')}</button><button class="danger" id="confirmDelete">${tr('Supprimer','Delete')}</button></div>
+  </section></div>`;
+  $('#cancelDelete').onclick=closeModal;
+  $('#deleteOverlay').onclick=e=>{if(e.target.id==='deleteOverlay')closeModal()};
+  $('#confirmDelete').onclick=async()=>{await del(id);closeModal();if(current?.id===id)current=null;lists();toast(tr('Tier List supprimée.','Tier List deleted.'))};
+ });
+}
+function $$(s){return [...document.querySelectorAll(s)]}
+function tr(fr,en){return settings.language==='en'?en:fr}
+function settingsPage(){
+ $('#view').innerHTML=head(tr('Paramètres','Settings'),tr('Personnalise ton espace de travail.','Customize your workspace.'))+
+ `<section class="panel"><h2>${tr('Langue','Language')}</h2><div class="field"><label>${tr('Langue de l’application','Application language')}</label><select id="language" style="width:100%"><option value="fr" ${settings.language!=='en'?'selected':''}>Français</option><option value="en" ${settings.language==='en'?'selected':''}>English</option></select></div></section>
+ <section class="panel"><h2>${tr('Apparence','Appearance')}</h2><div class="field"><label>${tr('Thème — 5 niveaux, du sombre au clair','Theme — 5 levels, dark to light')}</label><input id="theme" type="range" min="0" max="4" step="1" value="${settings.theme}"><div class="note" id="themeLabel"></div></div><div class="field" style="margin-top:20px"><label>${tr('Taille des images (px)','Image size (px)')}</label><input id="size" type="range" min="60" max="180" step="10" value="${settings.size}"><div class="note" id="sizeLabel"></div></div><p class="note">${tr('Ces préférences sont conservées dans ce navigateur.','These preferences are saved in this browser.')}</p></section>
+ <section class="panel"><h2>${tr('Données locales','Local data')}</h2><p class="note">${tr('Les Tier Lists et les images sont stockées dans IndexedDB sur cet ordinateur et ce navigateur. Exporte régulièrement tes PNG pour disposer d’une sauvegarde indépendante.','Tier Lists and images are stored in IndexedDB on this computer and browser. Export your PNG files regularly as independent backups.')}</p></section>`;
+ const labels=settings.language==='en'?['Very dark','Dark','Medium','Light','Very light']:['Très sombre','Sombre','Intermédiaire','Clair','Très clair'];
+ function apply(){document.body.dataset.theme=settings.theme;$('#themeLabel').textContent=labels[settings.theme];$('#sizeLabel').textContent=settings.size+' px';localStorage.setItem('tlm-settings',JSON.stringify(settings))}
+ $('#language').onchange=e=>{settings.language=e.target.value;localStorage.setItem('tlm-settings',JSON.stringify(settings));document.documentElement.lang=settings.language==='en'?'en':'fr';$('#navLists').title=tr('Mes Tier Lists','My Tier Lists');$('#navSettings').title=tr('Paramètres','Settings');settingsPage()};
+ $('#theme').oninput=e=>{settings.theme=+e.target.value;apply()};
+ $('#size').oninput=e=>{settings.size=+e.target.value;document.documentElement.style.setProperty('--tile-size',settings.size+'px');apply()};
+ apply();
+}
+function choose(){$('#view').innerHTML=head(tr('Nouvelle Tier List','New Tier List'),tr('Comment souhaites-tu commencer ?','How would you like to start?'))+`<div class="choice-grid"><button class="action-card" id="create"><span class="big">＋</span><strong>${tr('Nouvelle Tier List','New Tier List')}</strong><span class="note">${tr('Configurer les catégories et importer tes images','Configure rows and import your images')}</span></button><button class="action-card" id="import"><span class="big">⇧</span><strong>${tr('Importer une Tier List','Import a Tier List')}</strong><span class="note">${tr('Reconstruire un classement depuis un PNG','Rebuild a tier list from a PNG')}</span></button></div>`;$('#create').onclick=()=>{config={title:'Ma Tier List',tiers:defaultTiers.map(x=>[...x]),showNames:false};go('config')};$('#import').onclick=()=>go('import')}
+function configPage(){let editing=page==='config';$('#view').innerHTML=head('Configurer le tableau','Étape 1 sur 2')+`<div class="steps"><span class="step active">1 · Tableau</span><span class="step">2 · Images</span></div><section class="panel"><div class="field"><label>Titre de la Tier List</label><input id="title" style="width:100%" value="${esc(config.title)}"></div><h2 style="margin-top:20px">Catégories</h2><div id="tierConfigs">${config.tiers.map((t,i)=>tierConfig(t,i)).join('')}</div><button id="addTier">＋ Ajouter une catégorie</button><p class="note">Tu peux modifier le nom, la couleur et l'ordre des catégories.</p><div class="toolbar" style="margin-top:20px"><button class="primary" id="next">Continuer vers les images →</button></div></section>`;
+$('#title').oninput=e=>config.title=e.target.value;$('#addTier').onclick=()=>{config.tiers.push(['NOUVEAU','#555b70']);configRender()};wireTierConfig()}
+function tierConfig(t,i){return `<div class="tier-config"><input data-tiername="${i}" value="${esc(t[0])}" aria-label="Nom catégorie" placeholder="Nom de la catégorie"><button type="button" class="color-trigger" data-color-toggle="${i}" aria-label="Choisir la couleur"><span class="color-preview" data-color-preview="${i}" style="background:${t[1]}"></span></button><button class="icon danger" data-tierdel="${i}" title="Supprimer">×</button><span class="note">${i+1}</span><div class="color-palette" data-color-palette="${i}" hidden><div class="color-square" data-color-square="${i}" role="slider" aria-label="Saturation et luminosité"><span class="color-cursor" data-color-cursor="${i}"></span></div><input class="hue-control" data-color-hue="${i}" type="range" min="0" max="359" value="0" aria-label="Teinte"><div class="color-custom"><label for="customColor${i}">HEX</label><input id="customColor${i}" data-color-hex="${i}" value="${esc(t[1])}" maxlength="7" spellcheck="false" aria-label="Code couleur HEX"></div><div class="color-help">Clique ou fais glisser dans le carré pour choisir la couleur.</div></div></div>`}
+function hsvToHex(h,s,v){s/=100;v/=100;let c=v*s,x=c*(1-Math.abs((h/60)%2-1)),m=v-c,r=0,g=0,b=0;if(h<60){r=c;g=x}else if(h<120){r=x;g=c}else if(h<180){g=c;b=x}else if(h<240){g=x;b=c}else if(h<300){r=x;b=c}else{r=c;b=x}return '#'+[r,g,b].map(n=>Math.round((n+m)*255).toString(16).padStart(2,'0')).join('')}
+function hexToHsv(hex){let n=parseInt(hex.slice(1),16),r=((n>>16)&255)/255,g=((n>>8)&255)/255,b=(n&255)/255,max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min,h=0;if(d){if(max===r)h=60*(((g-b)/d)%6);else if(max===g)h=60*((b-r)/d+2);else h=60*((r-g)/d+4)}if(h<0)h+=360;return {h,s:max?d/max*100:0,v:max*100}}
+const tierColorState={};
+function setTierColor(i,color){if(!/^#[0-9a-fA-F]{6}$/.test(color))return;config.tiers[i][1]=color;color=color.toLowerCase();let preview=$(`[data-color-preview="${i}"]`),hex=$(`[data-color-hex="${i}"]`);if(preview)preview.style.background=color;if(hex&&hex.value.toLowerCase()!==color)hex.value=color;let hsv=hexToHsv(color);tierColorState[i]=hsv;updateColorPicker(i)}
+function updateColorPicker(i){let st=tierColorState[i];if(!st)return;let square=$(`[data-color-square="${i}"]`),cursor=$(`[data-color-cursor="${i}"]`),hue=$(`[data-color-hue="${i}"]`);if(square){square.style.background=`linear-gradient(to top,#000,transparent),linear-gradient(to right,#fff,hsl(${st.h} 100% 50%))`;if(cursor){cursor.style.left=st.s+'%';cursor.style.top=(100-st.v)+'%'}}if(hue)hue.value=Math.round(st.h)}
+function applyPickerHSV(i){let st=tierColorState[i];setTierColor(i,hsvToHex(st.h,st.s,st.v))}
+function updateSquareFromPointer(i,e){let square=$(`[data-color-square="${i}"]`),r=square.getBoundingClientRect(),st=tierColorState[i];st.s=Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100));st.v=100-Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100));applyPickerHSV(i)}
+function configRender(){let d=$('#tierConfigs');d.innerHTML=config.tiers.map(tierConfig).join('');wireTierConfig()}
+function wireTierConfig(){$$('[data-tiername]').forEach(e=>e.oninput=()=>config.tiers[+e.dataset.tiername][0]=e.value);$$('[data-color-toggle]').forEach(b=>b.onclick=e=>{e.stopPropagation();let i=+b.dataset.colorToggle,p=$(`[data-color-palette="${i}"]`),wasOpen=!p.hidden;$$('[data-color-palette]').forEach(x=>x.hidden=true);p.hidden=wasOpen;if(!wasOpen){tierColorState[i]=hexToHsv(config.tiers[i][1]);updateColorPicker(i)}});$$('[data-color-palette]').forEach(p=>p.onclick=e=>e.stopPropagation());$$('[data-color-square]').forEach(square=>{let i=+square.dataset.colorSquare,drag=false;square.onpointerdown=e=>{drag=true;square.setPointerCapture(e.pointerId);updateSquareFromPointer(i,e)};square.onpointermove=e=>{if(drag)updateSquareFromPointer(i,e)};square.onpointerup=()=>drag=false;square.onpointercancel=()=>drag=false});$$('[data-color-hue]').forEach(e=>e.oninput=()=>{let i=+e.dataset.colorHue; if(!tierColorState[i])tierColorState[i]=hexToHsv(config.tiers[i][1]);tierColorState[i].h=+e.value;applyPickerHSV(i)});$$('[data-color-hex]').forEach(e=>e.oninput=()=>{let v=e.value.trim();if(/^#[0-9a-fA-F]{6}$/.test(v))setTierColor(+e.dataset.colorHex,v)});$$('[data-tierdel]').forEach(e=>e.onclick=()=>{if(config.tiers.length<=1)return toast('Il faut conserver au moins une catégorie.');config.tiers.splice(+e.dataset.tierdel,1);configRender()});$('#next').onclick=()=>{if(!config.title.trim()||!config.tiers.length||config.tiers.some(t=>!t[0].trim()))return toast('Complète le titre et les noms des catégories.');go('images')}}
+if(!window.__tierPaletteOutsideHandler){window.__tierPaletteOutsideHandler=true;document.addEventListener('click',()=>$$('[data-color-palette]').forEach(p=>p.hidden=true))}function imagesPage(){$('#view').innerHTML=head('Importer les images','Étape 2 sur 2')+`<div class="steps"><span class="step">1 · Tableau</span><span class="step active">2 · Images</span></div><section class="panel"><input type="file" id="files" accept="image/*" multiple hidden><div class="toolbar"><button id="pick">⌕ Rechercher des fichiers</button><label class="name-toggle" style="margin:0"><input type="checkbox" id="names" ${config.showNames?'checked':''}> Afficher le nom du fichier</label></div><div id="fileInfo" class="file-list"></div><div class="toolbar"><button id="start" class="primary" disabled>Commencer la Tier List →</button></div><p class="note">Formats image courants acceptés. Les fichiers restent sur ton appareil.</p></section>`;
+$('#files').onchange=async e=>{pendingFiles=[...pendingFiles,...[...e.target.files].filter(f=>f.type.startsWith('image/'))];$('#fileInfo').innerHTML=pendingFiles.map(f=>`<span class="file-chip">${esc(f.name)}</span>`).join('');$('#start').disabled=!pendingFiles.length;e.target.value=''};$('#pick').onclick=()=>$('#files').click();$('#names').onchange=e=>config.showNames=e.target.checked;$('#start').onclick=async()=>{let items=[];for(let f of pendingFiles){items.push({id:uid(),name:f.name,type:f.type,data:await fileData(f),tier:null})}current={id:uid(),title:config.title,tiers:config.tiers.map(t=>[...t]),showNames:config.showNames,items,created:Date.now(),updated:Date.now(),status:'progress'};pendingFiles=[];await put(current);go('rank')}}
+function fileData(f){return new Promise((res,rej)=>{let r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+function displayFileName(name=''){return String(name).replace(/\\.[^.\\/\\\\]+$/,'')}
+function tierTile(item){let label=displayFileName(item.name);return `<div class="tile" draggable="true" data-item="${item.id}" title="${esc(item.name)}"><img src="${item.data}" alt="${esc(item.name)}">${current.showNames?`<span class="tile-name" title="${esc(label)}">${esc(label)}</span>`:''}</div>`}
+function rankPage(){if(!current)return go('lists');let pending=current.items.find(x=>x.tier===null);$('#view').innerHTML=head(current.title,'Classe les images une par une')+`<div class="toolbar"><span class="status">${current.items.filter(x=>x.tier!==null).length} / ${current.items.length} classées</span><button id="saveNow">Sauvegarder maintenant</button></div><div class="board" id="board">${current.tiers.map((t,i)=>`<div class="tier-row"><div class="tier-label" style="background:${t[1]}">${esc(t[0])}</div><div class="tier-content" data-tier="${i}">${current.items.filter(x=>x.tier===i).sort((a,b)=>(a.order??0)-(b.order??0)).map(tierTile).join('')}</div></div>`).join('')}</div><div class="current-dock"><div class="dock-inner">${pending?`<div class="current-preview" id="pending" draggable="true"><img src="${pending.data}"></div><div><strong>Image à classer</strong><div class="note">${current.items.filter(x=>x.tier!==null).length+1} sur ${current.items.length}${current.showNames?'<br>'+esc(displayFileName(pending.name)):''}</div></div><div class="drop-hint">Fais glisser l'image vers une catégorie</div>`:`<div style="flex:1;text-align:center;padding:12px"><strong>Plus d'image à classer</strong></div><button class="primary" id="download">↓ Télécharger le PNG</button>`}</div></div>`;
+$('#saveNow').onclick=()=>{save();toast('Tier List sauvegardée.')};if(!pending)$('#download').onclick=()=>exportPNG(current);wireDrag()}
+function wireDrag(){let dragged=null;$$('[data-item],#pending').forEach(el=>{el.ondragstart=e=>{dragged=el.dataset.item||current.items.find(x=>x.tier===null)?.id;e.dataTransfer.setData('text/plain',dragged);setTimeout(()=>el.classList.add('dragging'),0)};el.ondragend=()=>el.classList.remove('dragging')});
+$$('[data-tier]').forEach(zone=>{zone.ondragover=e=>{e.preventDefault();zone.classList.add('over')};zone.ondragleave=()=>zone.classList.remove('over');zone.ondrop=e=>{e.preventDefault();zone.classList.remove('over');let id=e.dataTransfer.getData('text/plain'),item=current.items.find(x=>x.id===id);if(!item)return;let wasPending=item.tier===null;let target=e.target.closest('.tile');let tier=+zone.dataset.tier;item.tier=tier;let group=current.items.filter(x=>x.tier===tier&&x.id!==item.id).sort((a,b)=>(a.order??0)-(b.order??0));let idx=target?group.findIndex(x=>x.id===target.dataset.item):-1;if(idx<0)idx=group.length;group.splice(idx,0,item);group.forEach((x,n)=>x.order=n);save();rankPage();if(wasPending)toast('Image classée !') }});
+$$('.tier-content').forEach(zone=>zone.ondragover=e=>e.preventDefault())}
+async function detailPage(){if(!current)return go('lists');$('#view').innerHTML=head(current.title,current.status==='done'?'Terminée':'En cours')+`<div class="toolbar"><button class="primary" id="watch">Regarder</button><button id="redo">Refaire</button><button id="edit">Modifier et refaire</button></div><section class="panel"><div class="note">${current.items.filter(x=>x.tier!==null).length} / ${current.items.length} images classées · ${current.tiers.length} catégories</div></section>`;$('#watch').onclick=()=>go('watch');$('#redo').onclick=()=>go('redo');$('#edit').onclick=()=>{config={title:current.title,tiers:current.tiers.map(t=>[...t]),showNames:current.showNames};pendingFiles=[];go('edit')}}
+function boardHTML(readOnly=true){return current.tiers.map((t,i)=>`<div class="tier-row"><div class="tier-label" style="background:${t[1]}">${esc(t[0])}</div><div class="tier-content">${current.items.filter(x=>x.tier===i).sort((a,b)=>(a.order??0)-(b.order??0)).map(tierTile).join('')}</div></div>`).join('')}
+function watchPage(){$('#view').innerHTML=head(current.title,'Lecture seule')+`<div class="toolbar"><button id="backDetail">← Retour</button><button class="primary" id="export">↓ Télécharger PNG</button></div><div class="board">${boardHTML()}</div>`;$('#backDetail').onclick=back;$('#export').onclick=()=>exportPNG(current)}
+function redoPage(){$('#view').innerHTML=head('Refaire la Tier List','Une nouvelle copie indépendante sera créée.')+`<section class="panel"><h2>Ordre des images</h2><div class="toolbar"><button id="keep">Conserver l'ordre initial</button><button id="shuffle">Mélanger aléatoirement</button></div></section>`;async function make(shuffle){let copy=structuredClone(current);copy.id=uid();copy.title=current.title+' (copie)';copy.created=Date.now();copy.updated=Date.now();let arr=[...copy.items];if(shuffle)arr.sort(()=>Math.random()-.5);copy.items=arr.map(x=>({...x,tier:null}));await put(copy);current=copy;go('rank')}$('#keep').onclick=()=>make(false);$('#shuffle').onclick=()=>make(true)}
+function editPage(){$('#view').innerHTML=head('Modifier et refaire','La version originale ne sera pas modifiée.')+`<section class="panel"><div class="field"><label>Titre</label><input id="editTitle" style="width:100%" value="${esc(config.title)}"></div><h2>Catégories</h2><div id="tierConfigs">${config.tiers.map(tierConfig).join('')}</div><button id="addTier">＋ Ajouter une catégorie</button><h2 style="margin-top:22px">Images</h2><div class="toolbar"><button id="addFiles">⌕ Rechercher des fichiers</button></div><div id="editItems">${current.items.map(x=>`<div class="list-item"><img class="thumb" src="${x.data}"><span style="flex:1">${esc(x.name)}</span><button class="danger" data-remove="${x.id}">Supprimer</button></div>`).join('')}</div><div class="toolbar"><button class="primary" id="applyEdit">Valider les modifications et refaire</button></div></section><input id="editFileInput" type="file" accept="image/*" multiple class="hidden">`;
+$('#editTitle').oninput=e=>config.title=e.target.value;$('#addTier').onclick=()=>{config.tiers.push(['NOUVEAU','#555b70']);editPage()};wireTierConfig();$$('[data-remove]').forEach(b=>b.onclick=()=>{if(confirm('Supprimer cette image ?')){current.items=current.items.filter(x=>x.id!==b.dataset.remove);editPage()}});$('#addFiles').onclick=()=>$('#editFileInput').click();$('#editFileInput').onchange=async e=>{for(let f of e.target.files)if(f.type.startsWith('image/'))current.items.push({id:uid(),name:f.name,type:f.type,data:await fileData(f),tier:null});editPage()};$('#applyEdit').onclick=async()=>{let copy=structuredClone(current);copy.id=uid();copy.title=config.title;copy.tiers=config.tiers.map(t=>[...t]);copy.items=copy.items.map(x=>({...x,tier:null}));copy.showNames=current.showNames;copy.created=Date.now();copy.updated=Date.now();await put(copy);current=copy;go('rank')}}
+function importPage(){$('#view').innerHTML=head('Importer une Tier List','Sélectionne un fichier PNG exporté depuis Tier List Maker.')+`<section class="panel"><input type="file" id="png" accept="image/png" hidden><div class="toolbar"><button id="pickPng">⌕ Rechercher des fichiers</button></div><div class="toolbar" style="margin-top:15px"><button class="primary" id="validate" disabled>Valider le fichier</button></div><div id="importMsg" class="note"></div></section>`;$('#pickPng').onclick=()=>$('#png').click();$('#png').onchange=e=>{$('#validate').disabled=!e.target.files[0];$('#importMsg').textContent=e.target.files[0]?.name||''};$('#validate').onclick=async()=>{try{let f=$('#png').files[0],data=await f.arrayBuffer(),obj=readPNG(data);if(!obj||!obj.items||!obj.tiers)throw Error('Aucune donnée Tier List trouvée.');obj.id=uid();obj.title=(obj.title||'Tier List importée')+' (importée)';obj.updated=Date.now();obj.created=Date.now();await put(obj);current=obj;toast('Importation réussie.');go('detail')}catch(e){$('#importMsg').textContent='Fichier invalide ou incomplet : '+e.message}}}
+function crc32(buf){let c=-1;for(let b of new Uint8Array(buf)){c^=b;for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0)}return(c^-1)>>>0}
+function u32(n){return new Uint8Array([(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255])}
+function chunk(type,data){let t=new TextEncoder().encode(type),out=new Uint8Array(12+data.length);out.set(u32(data.length),0);out.set(t,4);out.set(data,8);out.set(u32(crc32(out.slice(4,8+data.length))),8+data.length);return out}
+function concat(arr){let n=arr.reduce((s,a)=>s+a.length,0),o=new Uint8Array(n),p=0;arr.forEach(a=>{o.set(a,p);p+=a.length});return o}
+async function exportPNG(obj){
+ try{
+  // Reproduit la géométrie du tableau affiché dans l'application.
+  const width=1200, labelWidth=116, tileSize=Math.max(60,Math.min(180,Number(settings.size)||110));
+  const titleTop=18, titleHeight=57, boardTop=titleTop+titleHeight;
+  const contentWidth=width-labelWidth-2;
+  const cols=Math.max(1,Math.floor(contentWidth/tileSize));
+  const rowHeights=obj.tiers.map((t,i)=>{
+   const count=obj.items.filter(x=>x.tier===i).length;
+   const lines=Math.max(1,Math.ceil(count/cols));
+   return Math.max(112,lines*tileSize+10);
+  });
+  const height=boardTop+rowHeights.reduce((a,b)=>a+b,0)+2;
+  const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+  const c=canvas.getContext('2d');
+  c.fillStyle='#17151d';c.fillRect(0,0,width,height);
+  c.fillStyle='#f4f1fa';c.font='700 30px Inter,Arial,sans-serif';
+  c.textBaseline='middle';c.fillText(obj.title||'Tier List',12,titleTop+22);
+  let y=boardTop;
+  for(let i=0;i<obj.tiers.length;i++){
+   const tier=obj.tiers[i], rowH=rowHeights[i];
+   c.fillStyle=tier[1];c.fillRect(0,y,labelWidth,rowH-1);
+   c.fillStyle='#fff';c.font='850 22px Inter,Arial,sans-serif';
+   c.textAlign='center';c.fillText(tier[0],labelWidth/2,y+rowH/2);
+   c.textAlign='left';
+   c.strokeStyle='#35313f';c.lineWidth=1;c.strokeRect(0.5,y+0.5,width-1,rowH-1);
+   const arr=obj.items.filter(x=>x.tier===i).sort((a,b)=>(a.order??0)-(b.order??0));
+   for(let j=0;j<arr.length;j++){
+    const item=arr[j],im=await loadImage(item.data);
+    const col=j%cols,line=Math.floor(j/cols);
+    const x=labelWidth+col*tileSize, tileY=y+5+line*tileSize;
+    const imageH=tileSize-19;
+    const scale=Math.min((tileSize-6)/im.width,imageH/im.height);
+    const iw=im.width*scale,ih=im.height*scale;
+    c.drawImage(im,x+(tileSize-iw)/2,tileY+(imageH-ih)/2,iw,ih);
+    if(obj.showNames){
+     const name=displayFileName(item.name);
+     c.fillStyle='#100e16';c.fillRect(x+2,tileY+imageH,tileSize-4,18);
+     c.fillStyle='#fff';c.font='650 10px Inter,Arial,sans-serif';
+     c.textAlign='center';c.textBaseline='middle';
+     let shown=name;
+     while(c.measureText(shown).width>tileSize-8&&shown.length>3)shown=shown.slice(0,-4)+'…';
+     c.fillText(shown,x+tileSize/2,tileY+imageH+9,tileSize-8);
+     c.textAlign='left';
+    }
+   }
+   y+=rowH;
+  }
+  const png=await new Promise(r=>canvas.toBlob(r,'image/png'));
+  if(!png)throw Error('Impossible de générer le PNG.');
+  const ab=new Uint8Array(await png.arrayBuffer()),json=new TextEncoder().encode(JSON.stringify(obj));
+  const signature=ab.slice(0,8);let pos=8,chunks=[];
+  while(pos<ab.length){
+   const len=(ab[pos]*16777216)+(ab[pos+1]<<16)+(ab[pos+2]<<8)+ab[pos+3];
+   const end=pos+12+len;chunks.push(ab.slice(pos,end));pos=end;
+   if(new TextDecoder().decode(ab.slice(pos-8,pos-4))==='IEND')break;
+  }
+  const output=concat([signature,...chunks.slice(0,-1),chunk('tlSt',json),chunks[chunks.length-1]]);
+  const blob=new Blob([output],{type:'image/png'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=(obj.title||'tier-list').replace(/[\u0000-\u001F<>:"\/\\|?*]/g,'_').trim()||'tier-list';a.download+='.png';a.click();URL.revokeObjectURL(url);
+  toast('PNG exporté avec les données de reconstruction.');
+ }catch(e){console.error(e);toast('Erreur lors de l’export PNG : '+e.message)}
+}
+function readPNG(ab){let b=new Uint8Array(ab),p=8;while(p<b.length){let len=(b[p]*16777216)+(b[p+1]<<16)+(b[p+2]<<8)+b[p+3],type=new TextDecoder().decode(b.slice(p+4,p+8)),data=b.slice(p+8,p+8+len);if(type==='tlSt'){return JSON.parse(new TextDecoder().decode(data))}p+=12+len;if(type==='IEND')break}throw Error('Métadonnées absentes ou corrompues.')}
+function loadImage(src){return new Promise((res,rej)=>{let i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src})}
+function closeModal(){$('#modalRoot').innerHTML=''}
+async function init(){try{await openDB();let s=localStorage.getItem('tlm-settings');if(s)settings={...settings,...JSON.parse(s)};document.body.dataset.theme=settings.theme;document.documentElement.lang=settings.language==='en'?'en':'fr';$('#navLists').title=tr('Mes Tier Lists','My Tier Lists');$('#navSettings').title=tr('Paramètres','Settings');document.documentElement.style.setProperty('--tile-size',settings.size+'px');lists()}catch(e){$('#view').innerHTML=head('Erreur de stockage')+'<p>Ton navigateur ne permet pas d’utiliser IndexedDB.</p>'}}
+init();
+</script></body></html>
